@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Login() {
   return (
@@ -58,24 +59,21 @@ export default function Login() {
             Remember Password
           </label>
         </div>
-        <a
-          href="forgot_password.html"
+        <Link
+       to="/forgot"
           className="text-decoration-none forgotpassword-text"
         >
           Forgot Password?
-        </a>
+        </Link>
       </div>
       <button type="submit" className="btn btn-primary w-100 py-4 mb-3">
         <a href="" /> Login
       </button>
       <div className="text-center mb-3">
         Don’t have an account?{" "}
-        <a
-          href="sign_up.html"
-          className="text-decoration-none fw-bold forgotpassword-text"
-        >
+         <Link  className="text-decoration-none fw-bold forgotpassword-text" to="/register">
           REGISTER
-        </a>
+      </Link>
       </div>
       <p className="footer-text text-center text-muted">
         By Signing In, You Agree to our
