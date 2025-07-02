@@ -41,10 +41,10 @@ function App() {
 
 
           <Route path="/" element={<MainLayout />}>
-            <Route index  element={<HomePage />} />
+            <Route index  element={<Dashboard />} />
             
              {/* <Route path="homepage" element={<HomePage />} />  */}
-             <Route path="dashboard" element={<Dashboard />} /> 
+             <Route path="homepage" element={<HomePage />} /> 
              <Route path="product" element={<Product />} /> 
              <Route path="productview" element={<ProductView />} /> 
              <Route path="productdetail" element={<ProductDetail />} /> 

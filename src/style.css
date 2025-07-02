@@ -353,7 +353,7 @@ a {
 
 .login-right .form-control {
     border-radius: 12px;
-    padding: 20px;
+    padding: 12px;
     border: 1px solid #EEEEEE;
     background-color: var(--white);
     font-weight: 400;

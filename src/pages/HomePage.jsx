@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import product from "../assets/image/product.png"
 
 const HomePage = () => {
   return (
@@ -277,7 +278,7 @@ const HomePage = () => {
     <div className="container">
       <div className="common-services-card position-relative text-center py-4 py-lg-5">
         <img
-          src="./assets/img/add-new-product-img.png"
+          src={product}
           alt="Add product"
           className="mb-4"
         />
@@ -292,6 +293,7 @@ const HomePage = () => {
             viewBox="0 0 21 21"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className='mx-1'
           >
             <g clipPath="url(#clip0_1_20311)">
               <path

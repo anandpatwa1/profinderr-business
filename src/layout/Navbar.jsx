@@ -1,4 +1,5 @@
 import React from 'react'
+import navlogo from "../assets/image/navlogo.png"
 
 export default function Navbar() {
   return (
@@ -7,7 +8,7 @@ export default function Navbar() {
       <div className="container">
         <a className="navbar-brand fw-bold" href="#">
           <img
-            src="./assets/img/logo-business.png"
+            src={navlogo}
             alt="logo"
             className="me-2"
           />

@@ -1,0 +1,57 @@
+button.btn.btn-primary {
+    padding: 14px !important;
+}
+
+/* register scroll form   */
+.register_wrapper .register_right {
+    height: 100%;
+    max-height: 580px;
+    overflow-y: auto;
+}
+
+
+
+
+.register_wrapper .register_form .form-control {
+    border-radius: 10px;
+    padding: 8px 10px 8px 10px;
+    border: 1px solid #EEEEEE;
+    background-color: var(--white);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0px;
+    color: #4A4A4A;
+}
+.register_wrapper .nav-item .nav-link {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000;
+}
+
+
+
+
+/* otp screen */
+
+.otp_wrapper .login-wrapper {
+    /* max-width: 1000px; */
+    margin: 30px;
+    /* background: #fff; */
+    border-radius: 20px;
+    overflow: hidden;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.05); */
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+
+
+/* slider */
+.swiper-wrapper {
+    display: flex;
+}
+
+.swiper-wrapper .swiper-slide {margin-right: 5px;}

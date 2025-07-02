@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import logo from "../assets/image/logo.png"
 
 const ForgotPassword = () => {
   return (
@@ -16,7 +17,7 @@ const ForgotPassword = () => {
   <div className="login-right">
     <div className="login-form text-center">
       <img
-        src="./assets/img/logo-vertical.png"
+        src={logo}
         alt="logo"
         className="logo mb-3"
       />

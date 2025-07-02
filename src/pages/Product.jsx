@@ -1,4 +1,8 @@
 import React from 'react'
+import s1 from "../assets/image/s1.png"
+import s2 from "../assets/image/s2.png"
+import s3 from "../assets/image/s3.png"
+
 
 const Product = () => {
   return (
@@ -81,7 +85,7 @@ const Product = () => {
             <div className="col-md-2 col-sm-3">
               <div className="image-thumb-wrapper ">
                 <img
-                  src="./assets/img/productShoe-img.jpg"
+                  src={s1}
                   className="image-thumb"
                 />
                 <span className="delete-btn overflow-hidden ">
@@ -135,7 +139,7 @@ const Product = () => {
             <div className="col-md-2 col-sm-3">
               <div className="image-thumb-wrapper ">
                 <img
-                  src="./assets/img/productShoe-img1.jpg"
+                  src={s2}
                   className="image-thumb"
                 />
                 <span className="delete-btn overflow-hidden ">
@@ -189,7 +193,7 @@ const Product = () => {
             <div className="col-md-2 col-sm-3">
               <div className="image-thumb-wrapper ">
                 <img
-                  src="./assets/img/productShoe-img2.jpg"
+                  src={s3}
                   className="image-thumb"
                 />
                 <span className="delete-btn overflow-hidden ">
@@ -243,7 +247,7 @@ const Product = () => {
             <div className="col-md-2 col-sm-3">
               <div className="image-thumb-wrapper ">
                 <img
-                  src="./assets/img/productShoe-img3.jpg"
+                  src={s1}
                   className="image-thumb"
                 />
                 <span className="delete-btn overflow-hidden ">

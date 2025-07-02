@@ -1,9 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import logo from "../assets/image/logo.png"
+import Successmark from "../assets/image/Successmark.png"
+
+
 
 const CreateNewPassword = () => {
   return (
-    <div>
+    <div className='register_wrapper'>
 
   <div className="login-wrapper">
     {/* Left Image Section */}
@@ -17,7 +21,7 @@ const CreateNewPassword = () => {
     <div className="login-right">
       <div className="login-form text-center">
         <img
-          src="./assets/img/logo-vertical.png"
+          src={logo}
           alt="logo"
           className="logo mb-3"
         />
@@ -63,7 +67,7 @@ const CreateNewPassword = () => {
       <div className="modal-content">
         <div className="modal-body sucess_moderl">
           <div className="sucess_img">
-            <img src="./assets/img/Sucess.png" />
+            <img src={Successmark} />
           </div>
           <h6>
             Password Changed <br />

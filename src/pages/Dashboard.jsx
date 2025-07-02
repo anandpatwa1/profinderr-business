@@ -1,4 +1,16 @@
 import React from 'react'
+import banner from "../assets/image/banner.png"
+import orange from "../assets/image/orange.png"
+import blue from "../assets/image/blue.png"
+import skyblue from "../assets/image/skyblue.png"
+import shoes from "../assets/image/shoes.png"
+import headphone from "../assets/image/headphone.png"
+import tshirt from "../assets/image/t-shirt.png"
+import mobile from "../assets/image/mobile.png"
+
+
+
+
 
 const Dashboard = () => {
   return (
@@ -57,7 +69,7 @@ const Dashboard = () => {
           </div>
         </div>
         <img
-          src="./assets/img/dashboard-shop-img.jpg"
+          src={banner}
           alt=""
           className="banner-img"
         />
@@ -74,7 +86,7 @@ const Dashboard = () => {
         <div className="row">
           <div className="col-md-4 col-sm-6">
             <div className="single-insight-card position-relative">
-              <img src="./assets/img/warning-card-bg.png" alt="" />
+              <img src={orange} />
               <div className="headings">
                 <h3 className="insight-heading text-white mb-1">2099+</h3>
                 <h5 className="text-white">Products in Wishlist</h5>
@@ -117,7 +129,7 @@ const Dashboard = () => {
           </div>
           <div className="col-md-4 col-sm-6">
             <div className="single-insight-card position-relative">
-              <img src="./assets/img/primary-card-bg.png" alt="" />
+              <img src={blue} alt="" />
               <div className="headings">
                 <h3 className="insight-heading text-white mb-1">2099+</h3>
                 <h5 className="text-white">Products in Wishlist</h5>
@@ -160,7 +172,7 @@ const Dashboard = () => {
           </div>
           <div className="col-md-4 col-sm-6">
             <div className="single-insight-card position-relative">
-              <img src="./assets/img/success-card-bg.png" alt="" />
+              <img src={skyblue} alt="" />
               <div className="headings">
                 <h3 className="insight-heading text-white mb-1">2099+</h3>
                 <h5 className="text-white">Products in Wishlist</h5>
@@ -505,7 +517,7 @@ const Dashboard = () => {
               <a href="product-detail.html">
                 <div className="product-image">
                   <img
-                    src="./assets/img/product-img-1.png"
+                    src="//images.ctfassets.net/yadj1kx9rmg0/wtrHxeu3zEoEce2MokCSi/cf6f68efdcf625fdc060607df0f3baef/quwowooybuqbl6ntboz3.jpg"
                     alt="Product Image"
                   />
                   <div className="price-tag">£100</div>
@@ -525,7 +537,7 @@ const Dashboard = () => {
           <div className="col-xl-3 col-lg-4 col-md-6">
             <div className="product-card">
               <div className="product-image">
-                <img src="./assets/img/product-img-2.png" alt="Product Image" />
+                <img src="https://pm.epages.com/WebRoot/Store/Shops/apidocu/51E7/F905/2E4C/78C2/30C2/AC14/145F/A4E5/013-headphone-red_h.jpg" alt="Product Image" />
                 <div className="price-tag">£100</div>
               </div>
               <div className="product-content">
@@ -542,7 +554,7 @@ const Dashboard = () => {
           <div className="col-xl-3 col-lg-4 col-md-6">
             <div className="product-card">
               <div className="product-image">
-                <img src="./assets/img/product-img-3.png" alt="Product Image" />
+                <img src="https://pm.epages.com/WebRoot/Store/Shops/apidocu/51E7/F905/2E4C/78C2/30C2/AC14/145F/A4E5/013-headphone-red_m.jpg" alt="Product Image" />
                 <div className="price-tag">£100</div>
               </div>
               <div className="product-content">
@@ -556,7 +568,7 @@ const Dashboard = () => {
           <div className="col-xl-3 col-lg-4 col-md-6">
             <div className="product-card">
               <div className="product-image">
-                <img src="./assets/img/product-img-1.png" alt="Product Image" />
+                <img src="https://pm.epages.com/WebRoot/Store/Shops/apidocu/51E7/F905/2E4C/78C2/30C2/AC14/145F/A4E5/013-headphone-red_m.jpg" alt="Product Image" />
                 <div className="price-tag">£100</div>
               </div>
               <div className="product-content">
@@ -573,7 +585,7 @@ const Dashboard = () => {
           <div className="col-xl-3 col-lg-4 col-md-6">
             <div className="product-card">
               <div className="product-image">
-                <img src="./assets/img/product-img-1.png" alt="Product Image" />
+                <img src="https://pm.epages.com/WebRoot/Store/Shops/apidocu/51E7/F905/2E4C/78C2/30C2/AC14/145F/A4E5/013-headphone-red_m.jpg" alt="Product Image" />
                 <div className="price-tag">£100</div>
               </div>
               <div className="product-content">
@@ -587,7 +599,7 @@ const Dashboard = () => {
           <div className="col-xl-3 col-lg-4 col-md-6">
             <div className="product-card">
               <div className="product-image">
-                <img src="./assets/img/product-img-1.png" alt="Product Image" />
+                <img src="https://pm.epages.com/WebRoot/Store/Shops/apidocu/51E7/F905/2E4C/78C2/30C2/AC14/145F/A4E5/013-headphone-red_m.jpg" alt="Product Image" />
                 <div className="price-tag">£100</div>
               </div>
               <div className="product-content">
@@ -604,7 +616,7 @@ const Dashboard = () => {
           <div className="col-xl-3 col-lg-4 col-md-6">
             <div className="product-card">
               <div className="product-image">
-                <img src="./assets/img/product-img-3.png" alt="Product Image" />
+                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FImage&psig=AOvVaw3SBrco_y3RqNoBHuSZGnoG&ust=1751533559127000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLjy9KDpnY4DFQAAAAAdAAAAABAE" alt="Product Image" />
                 <div className="price-tag">£100</div>
               </div>
               <div className="product-content">
@@ -621,7 +633,7 @@ const Dashboard = () => {
           <div className="col-xl-3 col-lg-4 col-md-6">
             <div className="product-card">
               <div className="product-image">
-                <img src="./assets/img/product-img-2.png" alt="Product Image" />
+                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FImage&psig=AOvVaw3SBrco_y3RqNoBHuSZGnoG&ust=1751533559127000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLjy9KDpnY4DFQAAAAAdAAAAABAE" alt="Product Image" />
                 <div className="price-tag">£100</div>
               </div>
               <div className="product-content">
@@ -674,7 +686,7 @@ const Dashboard = () => {
                     <div className="col-5">
                       <div className="deal-image">
                         <img
-                          src="./assets/img/deal-shoes-img.png"
+                          src={shoes}
                           alt="Product Image"
                         />
                       </div>
@@ -707,7 +719,7 @@ const Dashboard = () => {
                   <div className="col-5">
                     <div className="deal-image">
                       <img
-                        src="./assets/img/deal-shoes-img.png"
+                        src={headphone}
                         alt="Product Image"
                       />
                     </div>
@@ -737,7 +749,7 @@ const Dashboard = () => {
                   <div className="col-5">
                     <div className="deal-image">
                       <img
-                        src="./assets/img/deal-shoes-img.png"
+                        src={tshirt}
                         alt="Product Image"
                       />
                     </div>
@@ -767,7 +779,7 @@ const Dashboard = () => {
                   <div className="col-5">
                     <div className="deal-image">
                       <img
-                        src="./assets/img/deal-shoes-img.png"
+                        src={shoes}
                         alt="Product Image"
                       />
                     </div>
@@ -797,7 +809,7 @@ const Dashboard = () => {
                   <div className="col-5">
                     <div className="deal-image">
                       <img
-                        src="./assets/img/deal-shoes-img.png"
+                        src={headphone}
                         alt="Product Image"
                       />
                     </div>
@@ -827,7 +839,7 @@ const Dashboard = () => {
                   <div className="col-5">
                     <div className="deal-image">
                       <img
-                        src="./assets/img/deal-shoes-img.png"
+                        src={tshirt}
                         alt="Product Image"
                       />
                     </div>
@@ -862,7 +874,7 @@ const Dashboard = () => {
         <div className="row align-items-center gy-4">
           <div className="col-lg-5">
             <div className="text-center">
-              <img src="./assets/img/app-screenshot-img.png" alt="" />
+              <img src={mobile} alt="" />
             </div>
           </div>
           <div className="col-lg-6">
