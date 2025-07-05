@@ -1,163 +1,94 @@
-import React from 'react'
-import navlogo from "../assets/image/navlogo.png"
+// src/components/Navbar.js
+import React, { useState } from 'react';
+import navlogo from "../assets/image/navlogo.png";
+import Sidebar from './Sidebar';
 
 export default function Navbar() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
-    <header className="">
-    <nav className="navbar navbar-expand-xl  bg-white py-2">
-      <div className="container">
-        <a className="navbar-brand fw-bold" href="#">
-          <img
-            src={navlogo}
-            alt="logo"
-            className="me-2"
-          />
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
-            <li className="nav-item">
-              <a href="" className="nav-link active">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="" className="nav-link">
-                Products
-              </a>
-            </li>
-            <li className="nav-item">
-              <button className="btn text-white affliate-prg-btn gap-2 d-none d-md-flex align-items-center p-2">
-                <div>
-                  <svg
-                    width={24}
-                    height={24}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+    <>
+      <header className="">
+        <nav className="navbar navbar-expand-xl bg-white py-2">
+          <div className="container">
+            <a className="navbar-brand fw-bold" href="#">
+              <img src={navlogo} alt="logo" className="me-2" />
+            </a>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon" />
+            </button>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
+                <li className="nav-item">
+                  <a href="" className="nav-link active">Home</a>
+                </li>
+                <li className="nav-item">
+                  <a href="" className="nav-link">Products</a>
+                </li>
+                <li className="nav-item">
+                  <button className="btn text-white affliate-prg-btn gap-2 d-none d-md-flex align-items-center p-2">
+                    {/* ... Your SVG code remains unchanged ... */}
+                    <div className="text-end">
+                      <span className="sml-text">Join & Earn</span> <br />
+                      Affiliated Program
+                    </div>
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button className="btn btn-primary px-3">
+                    {/* ... Your SVG for Add Products ... */}
+                    Add Products
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <a href="" className="nav-icons d-flex align-items-center justify-content-center">
+                    {/* ... Your heart icon SVG ... */}
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="" className="nav-icons d-flex align-items-center justify-content-center">
+                    {/* ... Your bell icon SVG ... */}
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="nav-icons d-flex align-items-center justify-content-center bg-transparent border-0"
+                    onClick={() => setIsSidebarOpen(true)}
                   >
-                    <path
-                      d="M12.0938 1.02612C12.0703 1.02612 12.0375 1.02612 12.0094 1.03175C11.7938 1.07159 11.5359 1.27081 11.3672 1.72597C11.1891 2.18065 11.1516 2.82894 11.3062 3.52315C11.4656 4.20894 11.7937 4.80003 12.1594 5.16097C12.5156 5.5219 12.8391 5.62034 13.0547 5.58284C13.2797 5.55003 13.5281 5.34378 13.6969 4.89378C13.875 4.4419 13.9219 3.78472 13.7625 3.09612C13.5984 2.40237 13.275 1.8169 12.9094 1.45831C12.6 1.13956 12.3141 1.02612 12.0938 1.02612ZM17.5031 7.0969C16.9875 7.11097 16.3359 7.2469 15.7031 7.51409C14.9719 7.83284 14.4094 8.25941 14.1 8.66253C13.7906 9.05159 13.7625 9.34691 13.8609 9.52034C13.9641 9.69378 14.25 9.85784 14.7984 9.88128C15.3469 9.91409 16.0875 9.77816 16.8141 9.46878C17.5406 9.15472 18.1125 8.72347 18.4219 8.32972C18.7313 7.94065 18.7547 7.63597 18.6562 7.46253C18.5578 7.2844 18.2672 7.12972 17.7188 7.11097C17.6437 7.0969 17.5781 7.0969 17.5031 7.0969ZM11.1141 11.4516C10.8047 11.4563 10.5234 11.4938 10.2703 11.5594C9.71719 11.7 9.39844 11.9532 9.29531 12.2578C9.17813 12.5625 9.29531 12.9282 9.66094 13.3219C10.0453 13.7063 10.6781 14.0766 11.4656 14.2828C12.2484 14.4891 13.0031 14.4844 13.5656 14.3344C14.1328 14.1891 14.4516 13.9313 14.5547 13.6313C14.6625 13.3266 14.5547 12.9657 14.175 12.5672C13.8047 12.1828 13.1719 11.8125 12.3844 11.611C11.9391 11.4938 11.5031 11.4469 11.1141 11.4516ZM18.6469 14.175L15.75 15.5485C15.9469 15.5578 16.4391 15.5719 16.4391 15.5719L16.7484 15.9797L19.3125 14.6438L18.6469 14.175ZM16.0922 14.1797L13.4016 15.4547C13.6594 15.4688 14.2688 15.4782 14.5125 15.4922L16.8469 14.386L16.0922 14.1797ZM20.4328 14.686L17.1281 16.4391L17.8078 17.3157L21.3 15.225L20.4328 14.686ZM7.36406 15.1125C7.22212 15.1123 7.08061 15.128 6.94219 15.1594C3.59063 15.9328 1.6125 15.9985 1.02656 15.9985H0.84375V21.0375C0.84375 21.0375 1.3875 20.9578 2.29219 20.9532C4.04063 20.9532 7.12031 21.2532 10.1203 23.0063C10.2797 23.1047 10.6219 23.1422 11.0484 23.1422C12.1875 23.1422 13.9172 22.8703 14.3156 22.7203C18.3281 21.2157 23.1562 17.086 23.1562 17.086L21.6328 15.7547C21.6328 15.7547 17.8922 18.1407 17.4188 18.3703C13.1484 20.4657 9.68906 19.1578 9.68906 19.1578C9.68906 19.1578 15.3094 19.2985 17.1141 17.8782L16.0547 16.2844C16.0547 16.2844 12.1734 16.1766 10.7906 15.9938C10.0687 15.9 8.50781 15.1125 7.36406 15.1125Z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <div className=" text-end">
-                  <span className="sml-text">Join &amp; Earn</span> <br />{" "}
-                  Affiliated Program
-                </div>
-              </button>
-            </li>
-            <li className="nav-item">
-              <button className="btn btn-primary px-3">
-                <svg
-                  width={21}
-                  height={21}
-                  viewBox="0 0 21 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clipPath="url(#clip0_1_20311)">
-                    <path
-                      d="M10.5 0C13.2848 0 15.9555 1.10625 17.9246 3.07538C19.8938 5.04451 21 7.71523 21 10.5C21 13.2848 19.8938 15.9555 17.9246 17.9246C15.9555 19.8938 13.2848 21 10.5 21C7.71523 21 5.04451 19.8938 3.07538 17.9246C1.10625 15.9555 0 13.2848 0 10.5C0 7.71523 1.10625 5.04451 3.07538 3.07538C5.04451 1.10625 7.71523 0 10.5 0ZM11.8939 5.6595C11.8939 5.3114 11.7556 4.97756 11.5095 4.73142C11.2633 4.48528 10.9295 4.347 10.5814 4.347C10.2333 4.347 9.89944 4.48528 9.6533 4.73142C9.40716 4.97756 9.26888 5.3114 9.26888 5.6595V9.26888H5.6595C5.3114 9.26888 4.97756 9.40716 4.73142 9.6533C4.48528 9.89944 4.347 10.2333 4.347 10.5814C4.347 10.9295 4.48528 11.2633 4.73142 11.5095C4.97756 11.7556 5.3114 11.8939 5.6595 11.8939H9.26888V15.5033C9.26888 15.8513 9.40716 16.1852 9.6533 16.4313C9.89944 16.6775 10.2333 16.8158 10.5814 16.8158C10.9295 16.8158 11.2633 16.6775 11.5095 16.4313C11.7556 16.1852 11.8939 15.8513 11.8939 15.5033V11.8939H15.5033C15.8513 11.8939 16.1852 11.7556 16.4313 11.5095C16.6775 11.2633 16.8158 10.9295 16.8158 10.5814C16.8158 10.2333 16.6775 9.89944 16.4313 9.6533C16.1852 9.40716 15.8513 9.26888 15.5033 9.26888H11.8939V5.6595Z"
-                      fill="white"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1_20311">
-                      <rect width={21} height={21} fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                Add Products
-              </button>
-            </li>
-            <li className="nav-item">
-              <a
-                href=""
-                className="nav-icons d-flex align-items-center justify-content-center"
-              >
-                <svg
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z"
-                    fill="#5C5C5C"
-                  />
-                </svg>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href=""
-                className="nav-icons d-flex align-items-center justify-content-center"
-              >
-                <svg
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M14.7521 1.914C14.1918 2.68512 13.852 3.59423 13.7692 4.5438C13.6864 5.49337 13.8636 6.44758 14.282 7.30406C14.7003 8.16054 15.3439 8.88697 16.1437 9.40543C16.9436 9.92389 17.8695 10.2148 18.8221 10.247V10.258C18.8371 10.456 18.8521 10.659 18.8721 10.855C19.1091 13.102 19.6491 14.645 20.1681 15.658C20.5131 16.333 20.8521 16.781 21.0921 17.052C21.1974 17.1715 21.311 17.2834 21.4321 17.387L21.4421 17.393C21.5704 17.4861 21.6659 17.6175 21.7149 17.7683C21.7639 17.9191 21.7638 18.0815 21.7147 18.2323C21.6656 18.383 21.57 18.5143 21.4416 18.6074C21.3132 18.7004 21.1586 18.7503 21.0001 18.75H3.00009C2.84189 18.7498 2.6878 18.6996 2.55986 18.6066C2.43192 18.5135 2.33667 18.3824 2.28775 18.232C2.23882 18.0815 2.23872 17.9195 2.28745 17.769C2.33619 17.6184 2.43127 17.4872 2.55909 17.394L2.56709 17.387L2.63109 17.333C2.69109 17.279 2.78809 17.188 2.90809 17.052C3.14809 16.782 3.48709 16.334 3.83209 15.659C4.52209 14.31 5.25009 12.03 5.25009 8.4C5.25009 6.519 5.95009 4.706 7.21009 3.362C8.47209 2.016 10.1941 1.25 12.0001 1.25C12.3828 1.25 12.7604 1.28367 13.1331 1.351C13.3711 1.394 14.1511 1.637 14.7521 1.914Z"
-                    fill="#5C5C5C"
-                  />
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M15.25 5C15.25 4.00544 15.6451 3.05161 16.3484 2.34835C17.0516 1.64509 18.0055 1.25 19 1.25C19.9946 1.25 20.9484 1.64509 21.6517 2.34835C22.3549 3.05161 22.75 4.00544 22.75 5C22.75 5.99456 22.3549 6.94839 21.6517 7.65165C20.9484 8.35491 19.9946 8.75 19 8.75C18.0055 8.75 17.0516 8.35491 16.3484 7.65165C15.6451 6.94839 15.25 5.99456 15.25 5ZM9.89404 20.351C9.97926 20.3016 10.0734 20.2695 10.171 20.2565C10.2687 20.2435 10.3679 20.2498 10.4631 20.2752C10.5583 20.3005 10.6475 20.3444 10.7258 20.4042C10.804 20.4641 10.8697 20.5388 10.919 20.624C11.0289 20.8133 11.1867 20.9704 11.3764 21.0796C11.5661 21.1889 11.7811 21.2464 12 21.2464C12.2189 21.2464 12.434 21.1889 12.6237 21.0796C12.8134 20.9704 12.9711 20.8133 13.081 20.624C13.1305 20.5388 13.1962 20.4641 13.2745 20.4043C13.3528 20.3445 13.4421 20.3007 13.5373 20.2754C13.6326 20.2501 13.7319 20.2438 13.8295 20.2568C13.9272 20.2699 14.0213 20.3021 14.1065 20.3515C14.1918 20.4009 14.2664 20.4667 14.3262 20.545C14.3861 20.6233 14.4299 20.7126 14.4552 20.8078C14.4805 20.903 14.4868 21.0023 14.4737 21.1C14.4607 21.1976 14.4285 21.2918 14.379 21.377C14.1373 21.7938 13.7903 22.1399 13.3728 22.3804C12.9553 22.6209 12.4819 22.7476 12 22.7476C11.5182 22.7476 11.0448 22.6209 10.6273 22.3804C10.2097 22.1399 9.86274 21.7938 9.62104 21.377C9.5715 21.2917 9.53926 21.1975 9.52617 21.0998C9.51308 21.002 9.51939 20.9027 9.54475 20.8074C9.57011 20.7121 9.61401 20.6227 9.67394 20.5444C9.73388 20.4661 9.80867 20.4004 9.89404 20.351Z"
-                    fill="#5C5C5C"
-                  />
-                  <circle cx={19} cy={5} r={4} fill="#F83F3F" />
-                </svg>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-icons d-flex align-items-center justify-content-center"
-                data-bs-toggle="offcanvas"
-                href="#offcanvasExample"
-                role="button"
-                aria-controls="offcanvasExample"
-              >
-                <svg
-                  width={22}
-                  height={22}
-                  viewBox="0 0 22 22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3 6H18.2957M3 10.7344H18.2957M3 15.4687H18.2957"
-                    stroke="#5C5C5C"
-                    strokeWidth="2.1851"
-                    strokeMiterlimit={10}
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-  )
+                    {/* Your toggle icon */}
+                    <svg
+                      width={22}
+                      height={22}
+                      viewBox="0 0 22 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 6H18.2957M3 10.7344H18.2957M3 15.4687H18.2957"
+                        stroke="#5C5C5C"
+                        strokeWidth="2.1851"
+                        strokeMiterlimit={10}
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      {/* Sidebar Render */}
+      {isSidebarOpen && <Sidebar onClose={() => setIsSidebarOpen(false)} />}
+    </>
+  );
 }

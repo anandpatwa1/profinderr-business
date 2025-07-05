@@ -7,6 +7,16 @@ import shoes from "../assets/image/shoes.png"
 import headphone from "../assets/image/headphone.png"
 import tshirt from "../assets/image/t-shirt.png"
 import mobile from "../assets/image/mobile.png"
+import WelcomeSection  from "../dashboardSection/WelcomeSection"
+import DashboardBanner  from "../dashboardSection/DashboardBanner"
+import InsightsSection  from "../dashboardSection/InsightsSection"
+import CategorySection from '../dashboardSection/CategorySection'
+import ProductSection from '../dashboardSection/ProductSection'
+import HotDealsSection from '../dashboardSection/HotDealsSection'
+import AppDownloadSection from '../dashboardSection/AppDownloadSection'
+import TestimonialsSection from '../dashboardSection/TestimonialsSection'
+import NewsletterSection from './NewsletterSection'
+
 
 
 
@@ -16,7 +26,7 @@ const Dashboard = () => {
   return (
     <div>
         <>
-  <section className="my-4">
+  {/* <section className="my-4">
     <div className="container">
       <div className="row align-items-center">
         <div className="col-md-5">
@@ -216,9 +226,18 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  </section>
+  </section> */}
+
+   <WelcomeSection />
+      <DashboardBanner />
+      <InsightsSection />
+
+
+
+
+
   {/* Category Section */}
-  <section className="category-section">
+  {/* <section className="category-section">
     <div className="container">
       <div className="common-services-card position-relative overflow-hidden">
         <h2 className="common-card-headeing">Choose Category</h2>
@@ -650,8 +669,15 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  </section>
-  <section className="category-section services-nearby-section">
+  </section> */}
+
+
+ <CategorySection />
+      <ProductSection />
+
+
+
+  {/* <section className="category-section services-nearby-section">
     <div className="container">
       <div className="common-services-card position-relative overflow-hidden">
         <div className="d-flex align-items-center gap-3 mb-4 flex-wrap justify-content-between">
@@ -1198,9 +1224,14 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  </section>
+  </section> */}
+
+
+    <HotDealsSection />
+    <AppDownloadSection />
+    <TestimonialsSection />
   {/* Newsletter Section */}
-  <section className="newsletter-section position-relative">
+  {/* <section className="newsletter-section position-relative">
     <div className="container">
       <div className="row align-items-center">
         <div className="col-md-6">
@@ -1219,7 +1250,8 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  </section>
+  </section> */}
+  <NewsletterSection />
 </>
 
     </div>
