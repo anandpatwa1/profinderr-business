@@ -15,14 +15,14 @@ export const post = async (data) => {
     }
 };
 
-export const getClubList = async () => {
+export const getBusiness = async (BusinessId) => {
     try {
-        const response = await axios.get(`${BaseUrl}/admin/get-clubs`, {
-            headers: {
-                Authorization: `Bearer ${authTokenExist}`
-            }
+        const response = await axios.get(`${BaseUrl}/plan/subscription/${BusinessId}`, {
+            // headers: {
+            //     Authorization: `Bearer ${authTokenExist}`
+            // }
         });
-        return response.data.data;
+        return response.data;
     } catch (error) {
         console.error("Error fetching user list:", error.message || error);
         throw error;

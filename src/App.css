@@ -1,0 +1,59 @@
+/* Add to your styles */
+.feature-list {
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-right: 8px; /* Prevents scrollbar from touching content */
+  }
+  
+  .feature-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    padding: 0 0.5rem;
+  }
+  
+  .feature-label {
+    font-weight: 600;
+    color: #4a4a4a;
+  }
+  
+  .feature-value {
+    color: rgba(255, 98, 0, 1);
+  }
+
+  .payment-form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .payment-button {
+    background: #556cd6;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .payment-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    margin-top: 12px;
+  }
+  
+  .success-message {
+    text-align: center;
+    padding: 20px;
+    background: #e8f5e9;
+    border-radius: 8px;
+  }

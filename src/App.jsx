@@ -25,12 +25,15 @@ import PaymentMethod from './mobilescreen/PaymentMethod.jsx';
 import AddCard from './mobilescreen/AddCard.jsx';
 import EditPage from './dashboardSection/EditPage.jsx';
 import ChooseCategoryPage from './dashboardSection/ChooseCategoryPage.jsx';
+import PlanPurchase from './mobilescreen/PlanPurchase.jsx';
+import PaumentDone from './mobilescreen/PaumentDone.jsx';
+import UpdatePlanPay from './mobilescreen/UpdatePlanPay.jsx';
 
 
 
 
 function App() {
-   
+
 
   return (
     <>
@@ -42,30 +45,40 @@ function App() {
           <Route path="/" element={<MinimalLayout />}>
             <Route path="login" element={<Login />} />
             {/* <Route path="signup" element={<SignupPage />} /> */}
-            	<Route path="register" element={<Register />} />
-					<Route path="forgot" element={<ForgotPassword />} /> 
-				 <Route path="otp" element={<Otp />} /> 
-						 <Route path="newpassword" element={<CreateNewPassword />} /> 
+            <Route path="register" element={<Register />} />
+            <Route path="forgot" element={<ForgotPassword />} />
+            <Route path="otp" element={<Otp />} />
+            <Route path="newpassword" element={<CreateNewPassword />} />
           </Route>
 
+          <Route path="/" element={<MinimalLayout />}>
+          <Route path="emailvarification" element={<EmailVerification />} />
+              <Route index element={<SubscriptionPlan />} />
+              <Route path="payment" element={<PaymentScreens />} />
+              <Route path="paymentmethod" element={<PaymentMethod />} />
+              <Route path="Card" element={<AddCard />} />
+              <Route path="purchase" element={<PlanPurchase />} />
 
+              <Route path="pay" element={<PaumentDone />} />
+              <Route path="UpdatePlan" element={<UpdatePlanPay />} />
+          </Route>
 
           <Route path="/" element={<MainLayout />}>
-            <Route index  element={<Dashboard />} />
-            
-             {/* <Route path="homepage" element={<HomePage />} />  */}
-             <Route path="homepage" element={<HomePage />} /> 
-             <Route path="product" element={<Product />} /> 
-             <Route path="productview" element={<ProductView />} /> 
-             <Route path="productdetail" element={<ProductDetail />} /> 
-             <Route path="hotdeal" element={<HotDeal />} /> 
-             <Route path="wishlist" element={<WishList />} /> 
-             <Route path="notification" element={<Notification />} /> 
-             <Route path="chat" element={<Chat />} /> 
-              <Route path="edit" element={<EditPage />} /> 
-              <Route path="chooseCetegory" element={<ChooseCategoryPage />} /> 
+            {/* <Route index element={<Dashboard />} /> */}
 
-            
+            {/* <Route path="homepage" element={<HomePage />} />  */}
+            <Route path="homepage" element={<HomePage />} />
+            <Route path="product" element={<Product />} />
+            <Route path="productview" element={<ProductView />} />
+            <Route path="productdetail" element={<ProductDetail />} />
+            <Route path="hotdeal" element={<HotDeal />} />
+            <Route path="wishlist" element={<WishList />} />
+            <Route path="notification" element={<Notification />} />
+            <Route path="chat" element={<Chat />} />
+            <Route path="edit" element={<EditPage />} />
+            <Route path="chooseCetegory" element={<ChooseCategoryPage />} />
+
+
 
 
 
@@ -79,28 +92,28 @@ function App() {
 
 
 
-            <Route path="dashboards/"> 
-						
-							 <Route path="emailvarification" element={<EmailVerification />} /> 
-							 <Route path="subscription" element={<SubscriptionPlan />} /> 
-							 <Route path="payment" element={<PaymentScreens />} />
-							 <Route path="paymentmethod" element={<PaymentMethod />} /> 
-							 <Route path="Card" element={<AddCard />} /> 
-               
+            <Route path="dashboards/">
+
+              <Route path="emailvarification" element={<EmailVerification />} />
+              <Route path="subscription" element={<SubscriptionPlan />} />
+              <Route path="payment" element={<PaymentScreens />} />
+              <Route path="paymentmethod" element={<PaymentMethod />} />
+              <Route path="Card" element={<AddCard />} />
 
 
 
 
-						</Route> 
+
+            </Route>
 
           </Route>
 
           <Route path="/mobile" element={<MinimalLayout />}>
-					 <Route path="emailvarification" element={<EmailVerification />} /> 
-							 <Route path="subscription" element={<SubscriptionPlan />} /> 
-							 <Route path="payment" element={<PaymentScreens />} />
-							 <Route path="paymentmethod" element={<PaymentMethod />} /> 
-					</Route>
+            <Route path="emailvarification" element={<EmailVerification />} />
+            <Route path="subscription" element={<SubscriptionPlan />} />
+            <Route path="payment" element={<PaymentScreens />} />
+            <Route path="paymentmethod" element={<PaymentMethod />} />
+          </Route>
           {/* <Route path="*" element={<Page404 />} /> */}
         </Routes>
       </BrowserRouter>
