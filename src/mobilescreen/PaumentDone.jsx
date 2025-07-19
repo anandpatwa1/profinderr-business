@@ -227,7 +227,7 @@ const PaumentDone = () => {
 
   const handleBackToApp = () => {
     setShowModal(false);
-    navigate('/dashboard'); // Or wherever you want to redirect after success
+    navigate('/'); // Or wherever you want to redirect after success
   };
 
   if (!planId || !businessId) {

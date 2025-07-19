@@ -92,9 +92,22 @@ const PaymentScreens = () => {
   };
 
   const formatFeatureValue = (value) => {
-    if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+    // Handle string "true"/"false" (case insensitive)
+    if (typeof value === 'string') {
+      const lowerValue = value.toLowerCase();
+      if (lowerValue === 'true') return '✓';
+      if (lowerValue === 'false') return '✗';
+    }
+    
+    // Handle boolean true/false
+    if (typeof value === 'boolean') {
+      return value ? '✓' : '✗';
+    }
+    
+    // Return original value for all other cases
     return value;
   };
+  
 
   const renderFeatureList = () => {
     if (!plan) return null;
@@ -250,7 +263,7 @@ const PaymentScreens = () => {
         {/* Bottom Button */}
         <div className="p-3">
         {Business.isActive ?
-          <Link to={`/pay?plan=${plan._id}&business=${BusinessId}`} className="w-100">
+          <Link to={`/UpdatePlan?plan=${plan._id}&business=${BusinessId}`} className="w-100">
           {/* <Link to={`/paymentmethod?plan=${plan._id}`} className="w-100"> */}
             <button
               className="btn w-100 rounded-pill fw-bold"

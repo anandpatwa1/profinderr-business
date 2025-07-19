@@ -9,6 +9,7 @@ import axios from 'axios';
 import { APIURL } from '../utils/URL';
 
 const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
+// const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
 
 const PaymentForm = ({ 
     planDetails, 
@@ -36,12 +37,13 @@ const PaymentForm = ({
           card: elements.getElement(CardElement),
         });
     
+    
         if (stripeError) {
           throw stripeError;
         }
     
         // 2. Call backend to initiate subscription
-        const response = await axios.post(`${APIURL()}/plan/subscribe`, {
+        const response = await axios.post(`${APIURL()}/plan/update-subscription`, {
           planId: planDetails._id,
           businessId,
           paymentMethodId: paymentMethod.id
