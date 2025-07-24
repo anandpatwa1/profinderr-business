@@ -227,7 +227,7 @@ const PaumentDone = () => {
 
   const handleBackToApp = () => {
     setShowModal(false);
-    navigate('/'); // Or wherever you want to redirect after success
+    window.location.href = 'https://profinderr.page.link/rWrk'; 
   };
 
   if (!planId || !businessId) {
