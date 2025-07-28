@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getBusiness } from "../utils/AuthAPI";
-// import { getPlanList } from "../api"; // Adjust import path as needed
 
 const SubscriptionPlan = () => {
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -19,7 +18,6 @@ const SubscriptionPlan = () => {
         <p>No Business details available</p>
         <p>Go to mobile screen and Retry</p>
       </div>
-
     );
   }
 
@@ -35,10 +33,6 @@ const SubscriptionPlan = () => {
 
       if (response.success) {
         setPlans(response.plans);
-        // Set the first plan as selected by default
-        if (response.plans.length > 0) {
-          setSelectedPlan(response.plans[0]._id);
-        }
       } else {
         throw new Error("Failed to fetch plans");
       }
@@ -49,15 +43,18 @@ const SubscriptionPlan = () => {
       setLoading(false);
     }
   };
+
   const fetchBusiness = async () => {
     try {
       setLoading(true);
       const response = await getBusiness(BusinessId);
-      console.log(response.data);
 
       if (response.success) {
         setBusiness(response.data);
-
+        // Set the default selected plan only if business is not active
+        if (!response.data.isActive && response.data.plans?.length > 0) {
+          setSelectedPlan(response.data.plans[0]._id);
+        }
       } else {
         throw new Error("Failed to fetch Business");
       }
@@ -73,6 +70,50 @@ const SubscriptionPlan = () => {
     return `£${price.toFixed(2)} per month`;
   };
 
+  const getFilteredPlans = () => {
+    if (!Business.isActive) {
+      // Show all plans if business is not active
+      return plans;
+    }
+
+    if (!Business.currentPlan || !plans.length) {
+      return [];
+    }
+
+    // Sort plans by price
+    const sortedPlans = [...plans].sort((a, b) => a.price - b.price);
+    const currentPlanPrice = Business.currentPlan.price;
+
+    // Find the current plan index
+    const currentPlanIndex = sortedPlans.findIndex(plan => plan.price === currentPlanPrice);
+
+    if (currentPlanIndex === -1) {
+      return sortedPlans; // show all if current plan not found
+    }
+
+    // Filter plans:
+    // 1. Show all plans except the current one
+    // 2. If current plan is not the lowest, show all higher plans and one lower plan (if exists)
+    const filteredPlans = sortedPlans.filter((plan, index) => {
+      // Always exclude the current plan
+      if (plan.price === currentPlanPrice) return false;
+
+      // If current plan is the lowest, show all higher plans
+      if (currentPlanIndex === 0) return true;
+
+      // For other cases:
+      // Show all higher plans
+      if (plan.price > currentPlanPrice) return true;
+
+      // Show only one plan lower than current (the immediate lower one)
+      if (index === currentPlanIndex - 1) return true;
+
+      return false;
+    });
+
+    return filteredPlans;
+  };
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center bg-white" style={{ minHeight: "100vh" }}>
@@ -82,6 +123,8 @@ const SubscriptionPlan = () => {
       </div>
     );
   }
+
+  const filteredPlans = getFilteredPlans();
 
   return (
     <div className="d-flex justify-content-center align-items-center bg-white" style={{ minHeight: "100vh" }}>
@@ -97,23 +140,14 @@ const SubscriptionPlan = () => {
 
           {/* Plan Cards */}
           <div className="flex-grow-1 mb-4">
-            {(() => {
-              const filteredPlans = plans.filter(plan =>
-                !Business.isActive ||  // Show all if business is inactive
-                (Business.currentPlan &&
-                  typeof Business.currentPlan.price === 'number' &&
-                  plan.price > Business.currentPlan.price)
-              );
-
-              if (filteredPlans.length === 0) {
-                return (
-                  <div className="text-center py-4">
-                    You're on the highest plan. For more options, contact support at profinndrr.
-                  </div>
-                );
-              }
-
-              return filteredPlans.map((plan) => (
+            {filteredPlans.length === 0 ? (
+              <div className="text-center py-4">
+                {Business.isActive
+                  ? "You're on the highest plan. For more options, contact support at profinndrr."
+                  : "No subscription plans available."}
+              </div>
+            ) : (
+              filteredPlans.map((plan) => (
                 <div
                   key={plan._id}
                   onClick={() => setSelectedPlan(plan._id)}
@@ -146,35 +180,29 @@ const SubscriptionPlan = () => {
                     </button>
                   </Link>
                 </div>
-              ));
-            })()}
+              ))
+            )}
           </div>
-          {/* ad {Business.currentPlan.price}ds */}
 
-          {/* Continue Button */}
-          {Business.isActive ?
+          {/* Continue/Update Button */}
+          {selectedPlan ? (
             <Link to={`/payment?plan=${selectedPlan}&business=${BusinessId}`}>
               <button
                 className="btn btn-warning text-white fw-bold rounded-pill py-2 mb-3"
                 style={{ backgroundColor: "#ff6600" }}
-                disabled={!selectedPlan}
               >
-                Update
+                {Business.isActive ? 'Update' : 'Continue'}
               </button>
             </Link>
-            :
-            <Link to={`/payment?plan=${selectedPlan}&business=${BusinessId}`}>
-              <button
-                className="btn btn-warning text-white fw-bold rounded-pill py-2 mb-3"
-                style={{ backgroundColor: "#ff6600" }}
-                disabled={!selectedPlan}
-              >
-                Continue
-              </button>
-            </Link>
-          }
-
-
+          ) : (
+            <button
+              className="btn btn-warning text-white fw-bold rounded-pill py-2 mb-3"
+              style={{ backgroundColor: "#ccc", cursor: "not-allowed" }}
+              disabled
+            >
+              {Business.isActive ? 'Update' : 'Continue'}
+            </button>
+          )}
 
           {/* Footer */}
           <p className="text-center small text-muted mb-0">
