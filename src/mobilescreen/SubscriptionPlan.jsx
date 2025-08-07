@@ -205,12 +205,12 @@ const SubscriptionPlan = () => {
           )}
 
           {/* Footer */}
-          <p className="text-center small text-muted mb-0">
+          {/* <p className="text-center small text-muted mb-0">
             By Signing In, You Agree to our <br />
             <a href="#" className="text-decoration-underline">Terms & Conditions</a>,{" "}
             <a href="#" className="text-decoration-underline">Privacy Policy</a> &{" "}
             <a href="#" className="text-decoration-underline">Content Policy</a>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

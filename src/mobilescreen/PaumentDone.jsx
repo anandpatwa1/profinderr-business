@@ -8,8 +8,8 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import axios from 'axios';
 import { APIURL } from '../utils/URL';
 
-// const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
-const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
+const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
+// const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
 
 const PaymentForm = ({ 
     planDetails, 

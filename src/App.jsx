@@ -42,16 +42,16 @@ function App() {
         {/* <ToastContainer/> */}
 
         <Routes>
-          <Route path="/" element={<MinimalLayout />}>
-            <Route path="" element={<Login />} />
-            {/* <Route path="signup" element={<SignupPage />} /> */}
+          {/* <Route path="/" element={<MinimalLayout />}>
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignupPage />} />
             <Route path="register" element={<Register />} />
             <Route path="forgot" element={<ForgotPassword />} />
             <Route path="otp" element={<Otp />} />
             <Route path="newpassword" element={<CreateNewPassword />} />
-          </Route>
+          </Route> */}
 
-          {/* <Route path="/" element={<MinimalLayout />}>
+          <Route path="/" element={<MinimalLayout />}>
           <Route path="emailvarification" element={<EmailVerification />} />
               <Route index element={<SubscriptionPlan />} />
               <Route path="payment" element={<PaymentScreens />} />
@@ -61,12 +61,10 @@ function App() {
 
               <Route path="pay" element={<PaumentDone />} />
               <Route path="UpdatePlan" element={<UpdatePlanPay />} />
-          </Route> */}
+          </Route>
 
-          <Route path="/" element={<MainLayout />}>
-            {/* <Route index element={<Dashboard />} /> */}
+          {/* <Route path="/" element={<MainLayout />}>
 
-            {/* <Route path="homepage" element={<HomePage />} />  */}
             <Route path="homepage" element={<HomePage />} />
             <Route path="product" element={<Product />} />
             <Route path="productview" element={<ProductView />} />
@@ -113,7 +111,7 @@ function App() {
             <Route path="subscription" element={<SubscriptionPlan />} />
             <Route path="payment" element={<PaymentScreens />} />
             <Route path="paymentmethod" element={<PaymentMethod />} />
-          </Route>
+          </Route> */}
           {/* <Route path="*" element={<Page404 />} /> */}
         </Routes>
       </BrowserRouter>
