@@ -8,8 +8,8 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import axios from 'axios';
 import { APIURL } from '../utils/URL';
 
-const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
-// const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
+// const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
+const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
 
 const PaymentForm = ({ 
     planDetails, 
@@ -23,6 +23,8 @@ const PaymentForm = ({
     const [cardError, setCardError] = useState(null);
   
     const handleSubmit = async (e) => {
+      console.log("handleSubmit-- start");
+      
       e.preventDefault();
       setCardError(null);
     
@@ -84,7 +86,7 @@ const PaymentForm = ({
     
         // 4. Success callback
         onSuccess(data);
-    
+        console.log("handleSubmit-- end sucess");
       } catch (err) {
         let errorMessage = "Something went wrong. Please try again.";
         
@@ -109,6 +111,9 @@ const PaymentForm = ({
         console.error("Payment error:", err);
         setCardError(errorMessage);
         onError(errorMessage);
+        console.log("handleSubmit-- end error");
+      }finally{
+        console.log("handleSubmit-- end finally");
       }
     };
     
@@ -230,6 +235,9 @@ const PaumentDone = () => {
     window.location.href = 'https://profinderr.page.link/rWrk'; 
   };
 
+
+  // 
+
   if (!planId || !businessId) {
     return (
       <div className="d-flex justify-content-center align-items-center bg-light" style={{ minHeight: "812px" }}>
@@ -294,7 +302,6 @@ const PaumentDone = () => {
           <p className="mb-1">Price: £{(planDetails.price).toFixed(2)}</p>
           <p className="small text-muted">{planDetails.description}</p>
         </div>
-
         {/* Payment Form */}
         <Elements stripe={stripePromise}>
           <PaymentForm 
