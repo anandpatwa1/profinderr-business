@@ -28,6 +28,7 @@ import ChooseCategoryPage from './dashboardSection/ChooseCategoryPage.jsx';
 import PlanPurchase from './mobilescreen/PlanPurchase.jsx';
 import PaumentDone from './mobilescreen/PaumentDone.jsx';
 import UpdatePlanPay from './mobilescreen/UpdatePlanPay.jsx';
+import VerifyBusiness from './mobilescreen/VerifyBusiness.jsx';
 
 
 
@@ -53,7 +54,8 @@ function App() {
 
           <Route path="/" element={<MinimalLayout />}>
           <Route path="emailvarification" element={<EmailVerification />} />
-              <Route index element={<SubscriptionPlan />} />
+              <Route index element={<VerifyBusiness />} />
+              <Route path="continue" element={<SubscriptionPlan />} />
               <Route path="payment" element={<PaymentScreens />} />
               <Route path="paymentmethod" element={<PaymentMethod />} />
               <Route path="Card" element={<AddCard />} />

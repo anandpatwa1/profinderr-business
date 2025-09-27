@@ -8,15 +8,16 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import axios from 'axios';
 import { APIURL } from '../utils/URL';
 
-// const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
-const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
+const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
+// const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
 
 const PaymentForm = ({ 
     planDetails, 
     businessId, 
     onSuccess, 
     onError,
-    loading 
+    loading,
+    setLoading
   }) => {
     const stripe = useStripe();
     const elements = useElements();
@@ -27,8 +28,10 @@ const PaymentForm = ({
       
       e.preventDefault();
       setCardError(null);
+      setLoading(true);
     
       if (!stripe || !elements) {
+        setLoading(false);
         return;
       }
     
@@ -38,7 +41,6 @@ const PaymentForm = ({
           type: 'card',
           card: elements.getElement(CardElement),
         });
-    
     
         if (stripeError) {
           throw stripeError;
@@ -71,9 +73,9 @@ const PaymentForm = ({
           }
         }
     
-        // 3. Confirm payment if clientSecret is returned
-        if (data.clientSecret) {
-          const { error: confirmError } = await stripe.confirmCardPayment(data.clientSecret, {
+        // 3. Confirm payment only if needed and clientSecret is returned
+        if (data.clientSecret && data.status !== "succeeded") {
+          const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
             payment_method: {
               card: elements.getElement(CardElement),
             },
@@ -82,11 +84,19 @@ const PaymentForm = ({
           if (confirmError) {
             throw confirmError;
           }
+          
+          // Check if payment succeeded
+          if (paymentIntent && paymentIntent.status === "succeeded") {
+            onSuccess(data);
+          }
+        } else if (data.status === "succeeded") {
+          // Payment already succeeded, no need to confirm
+          onSuccess(data);
+        } else {
+          throw new Error("Payment failed. Please try again.");
         }
-    
-        // 4. Success callback
-        onSuccess(data);
-        console.log("handleSubmit-- end sucess");
+        
+        console.log("handleSubmit-- end success");
       } catch (err) {
         let errorMessage = "Something went wrong. Please try again.";
         
@@ -111,9 +121,8 @@ const PaymentForm = ({
         console.error("Payment error:", err);
         setCardError(errorMessage);
         onError(errorMessage);
+        setLoading(false);
         console.log("handleSubmit-- end error");
-      }finally{
-        console.log("handleSubmit-- end finally");
       }
     };
     
@@ -193,6 +202,7 @@ const PaumentDone = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [planDetails, setPlanDetails] = useState(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   
   // Get parameters from URL
   const planId = new URLSearchParams(location.search).get('plan');
@@ -221,22 +231,28 @@ const PaumentDone = () => {
   }, [planId]);
 
   const handlePaymentSuccess = (data) => {
+    setPaymentSuccess(true);
     setShowModal(true);
     setLoading(false);
   };
 
   const handlePaymentError = (err) => {
-    setError(err.message);
+    setError(err);
     setLoading(false);
   };
 
   const handleBackToApp = () => {
     setShowModal(false);
-    window.location.href = 'https://profinderr.page.link/rWrk'; 
+    window.location.href = 'https://profinderrbiz.page.link/Mfmr'; 
   };
 
-
-  // 
+  // Redirect immediately if payment was successful
+  useEffect(() => {
+    if (paymentSuccess) {
+      // You can either show the modal or redirect immediately
+      // window.location.href = 'https://profinderr.page.link/rWrk';
+    }
+  }, [paymentSuccess]);
 
   if (!planId || !businessId) {
     return (
@@ -302,6 +318,7 @@ const PaumentDone = () => {
           <p className="mb-1">Price: £{(planDetails.price).toFixed(2)}</p>
           <p className="small text-muted">{planDetails.description}</p>
         </div>
+        
         {/* Payment Form */}
         <Elements stripe={stripePromise}>
           <PaymentForm 
@@ -310,6 +327,7 @@ const PaumentDone = () => {
             onSuccess={handlePaymentSuccess}
             onError={handlePaymentError}
             loading={loading}
+            setLoading={setLoading}
           />
         </Elements>
       </div>

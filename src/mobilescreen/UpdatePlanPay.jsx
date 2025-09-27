@@ -8,25 +8,38 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import axios from 'axios';
 import { APIURL } from '../utils/URL';
 
-// const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
-const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
+const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
+// const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
 
 const PaymentForm = ({ 
     planDetails, 
     businessId, 
     onSuccess, 
     onError,
-    loading 
+    loading,
+    setLoading
   }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [cardError, setCardError] = useState(null);
+    const [cardHolderName, setCardHolderName] = useState("");
+    const [cardHolderError, setCardHolderError] = useState(null);
   
     const handleSubmit = async (e) => {
       e.preventDefault();
       setCardError(null);
+      setCardHolderError(null);
+      setLoading(true);
     
       if (!stripe || !elements) {
+        setLoading(false);
+        return;
+      }
+    
+      // Validate card holder name
+      if (!cardHolderName.trim()) {
+        setCardHolderError("Card holder name is required");
+        setLoading(false);
         return;
       }
     
@@ -35,8 +48,10 @@ const PaymentForm = ({
         const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
           type: 'card',
           card: elements.getElement(CardElement),
+          billing_details: {
+            name: cardHolderName.trim(),
+          },
         });
-    
     
         if (stripeError) {
           throw stripeError;
@@ -69,21 +84,25 @@ const PaymentForm = ({
           }
         }
     
-        // 3. Confirm payment if clientSecret is returned
-        if (data.clientSecret) {
-          const { error: confirmError } = await stripe.confirmCardPayment(data.clientSecret, {
-            payment_method: {
-              card: elements.getElement(CardElement),
-            },
-          });
+        // 3. Confirm payment only if needed and clientSecret is returned
+        // Check if payment is already succeeded or needs confirmation
+        if (data.clientSecret && data.status !== "succeeded") {
+          const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret);
     
           if (confirmError) {
             throw confirmError;
           }
+          
+          // Check if payment succeeded
+          if (paymentIntent && paymentIntent.status === "succeeded") {
+            onSuccess(data);
+          }
+        } else if (data.status === "succeeded") {
+          // Payment already succeeded, no need to confirm
+          onSuccess(data);
+        } else {
+          throw new Error("Payment failed. Please try again.");
         }
-    
-        // 4. Success callback
-        onSuccess(data);
     
       } catch (err) {
         let errorMessage = "Something went wrong. Please try again.";
@@ -109,6 +128,7 @@ const PaymentForm = ({
         console.error("Payment error:", err);
         setCardError(errorMessage);
         onError(errorMessage);
+        setLoading(false);
       }
     };
     
@@ -148,8 +168,15 @@ const PaymentForm = ({
             className="form-control bg-light border-0 rounded-3"
             placeholder="Enter Holder Name"
             style={{ height: "48px" }}
+            value={cardHolderName}
+            onChange={(e) => setCardHolderName(e.target.value)}
             required
           />
+          {cardHolderError && (
+            <div className="alert alert-danger small mt-2">
+              {cardHolderError}
+            </div>
+          )}
         </div>
   
         <button
@@ -221,13 +248,13 @@ const UpdatePlanPay = () => {
   };
 
   const handlePaymentError = (err) => {
-    setError(err.message);
+    setError(err);
     setLoading(false);
   };
 
   const handleBackToApp = () => {
     setShowModal(false);
-    navigate('/dashboard'); // Or wherever you want to redirect after success
+    window.location.href = 'https://profinderrbiz.page.link/Mfmr'; 
   };
 
   if (!planId || !businessId) {
@@ -303,6 +330,7 @@ const UpdatePlanPay = () => {
             onSuccess={handlePaymentSuccess}
             onError={handlePaymentError}
             loading={loading}
+            setLoading={setLoading}
           />
         </Elements>
       </div>

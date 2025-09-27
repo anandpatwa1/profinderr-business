@@ -28,4 +28,17 @@ export const getBusiness = async (BusinessId) => {
         throw error;
     }
 };
+export const verifyBusiness = async (BusinessId) => {
+    try {
+        const response = await axios.post(`${BaseUrl}/business/verify-email-true/${BusinessId}`, {
+            // headers: {
+            //     Authorization: `Bearer ${authTokenExist}`
+            // }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching user list:", error.message || error);
+        throw error;
+    }
+};
 
