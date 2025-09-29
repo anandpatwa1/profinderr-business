@@ -140,3 +140,18 @@ button.btn.btn-primary {
   cursor: pointer;
   transition: 0.2s ease-in-out;
 }
+
+
+
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover:not(.opacity-75) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+}
+
+.opacity-75 {
+  cursor: not-allowed !important;
+}

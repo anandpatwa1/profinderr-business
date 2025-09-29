@@ -150,40 +150,53 @@ const SubscriptionPlan = () => {
               filteredPlans.map((plan) => (
                 <div
                   key={plan._id}
-                  onClick={() => setSelectedPlan(plan._id)}
-                  className={`d-flex justify-content-between align-items-center px-3 py-3 mb-3 rounded-4 subscription-card ${selectedPlan === plan._id ? "selected" : ""}`}
-                  style={{ cursor: "pointer" }}
+                  onClick={() => plan.isActive && setSelectedPlan(plan._id)}
+                  className={`d-flex justify-content-between align-items-center px-3 py-3 mb-3 rounded-4 subscription-card ${
+                    selectedPlan === plan._id ? "selected" : ""
+                  } ${!plan.isActive ? "opacity-50" : ""}`}
+                  style={{ 
+                    cursor: plan.isActive ? "pointer" : "default"
+                  }}
                 >
                   {/* Left side: circle checkbox + text */}
                   <div className="d-flex align-items-center">
                     {/* Circle Checkbox */}
-                    <div className={`custom-check ${selectedPlan === plan._id ? "checked" : ""}`}></div>
-
+                    <div className={`custom-check ${selectedPlan === plan._id ? "checked" : ""} ${
+                      !plan.isActive ? "disabled" : ""
+                    }`}></div>
+          
                     {/* Text */}
                     <div className="ms-3">
-                      <div className="fw-semibold fs-6 mb-0">{plan.name}</div>
+                      <div className="fw-semibold fs-6 mb-0">
+                        {plan.name}
+                        {!plan.isActive && <span className="badge bg-secondary ms-2">Coming Soon</span>}
+                      </div>
                       <div className="text-muted small">{formatPrice(plan.price)}</div>
+                        {plan.isActive && <span className="badge bg-primary ms-2">Introductory price</span>}
                     </div>
                   </div>
-
-                  {/* View Details Button */}
-                  <Link to={`/payment?plan=${plan._id}&business=${BusinessId}`}>
-                    <button
-                      className="btn btn-sm text-white fw-medium rounded-pill px-3 py-1"
-                      style={{
-                        backgroundColor: "#ff6600",
-                        fontSize: "14px",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </Link>
+          
+                  {/* View Details Button or Coming Soon Text */}
+                  {plan.isActive ? (
+                    <Link to={`/payment?plan=${plan._id}&business=${BusinessId}`}>
+                      <button
+                        className="btn btn-sm text-white fw-medium rounded-pill px-3 py-1"
+                        style={{
+                          backgroundColor: "#ff6600",
+                          fontSize: "14px",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        View Details
+                      </button>
+                    </Link>
+                  ) : (
+                    <span className="text-muted small">Launching Soon</span>
+                  )}
                 </div>
               ))
             )}
           </div>
-
           {/* Continue/Update Button */}
           {selectedPlan ? (
             <Link to={`/payment?plan=${selectedPlan}&business=${BusinessId}`}>

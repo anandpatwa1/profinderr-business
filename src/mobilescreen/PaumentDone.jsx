@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
 import { Modal } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,8 +8,8 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import axios from 'axios';
 import { APIURL } from '../utils/URL';
 
-const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
-// const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
+// const stripePromise = loadStripe('pk_test_51RLRETR1rNnrMabOOo7IbCVSsXfU3PRzZK6H1d4MDD2aCsOqTK06gC4tPt9HlgDcjPIdBDDpsu9J8ywUxNOPyESM006pfVnHhE');
+const stripePromise = loadStripe('pk_live_51RLREIJNbC4COxFLSDaisG5v6oxoGUayCLWsHXjbke2lQOvp2F8obW1YqlI0eG5JA9Vzgh31uoHoeAgCEjqhoEf700lTfrTPaE');
 
 const PaymentForm = ({ 
     planDetails, 
@@ -17,7 +17,8 @@ const PaymentForm = ({
     onSuccess, 
     onError,
     loading,
-    setLoading
+    setLoading,
+    paymentCompleted // Add this prop
   }) => {
     const stripe = useStripe();
     const elements = useElements();
@@ -27,6 +28,10 @@ const PaymentForm = ({
       console.log("handleSubmit-- start");
       
       e.preventDefault();
+      
+      // Prevent submission if payment is already completed
+      if (paymentCompleted) return;
+      
       setCardError(null);
       setLoading(true);
     
@@ -126,6 +131,19 @@ const PaymentForm = ({
       }
     };
     
+    // Show success state if payment is completed
+    if (paymentCompleted) {
+      return (
+        <div className="text-center p-4">
+          <div className="mb-3">
+            <FaCheckCircle size={64} color="#1EC26B" />
+          </div>
+          <h5 className="text-success fw-bold">Payment Completed Successfully!</h5>
+          <p className="text-muted">Your subscription has been activated.</p>
+        </div>
+      );
+    }
+    
     return (
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -174,7 +192,7 @@ const PaymentForm = ({
             fontSize: "16px",
             height: "50px",
           }}
-          disabled={loading || !stripe}
+          disabled={loading || !stripe || paymentCompleted}
         >
           {loading ? (
             <>
@@ -193,7 +211,6 @@ const PaymentForm = ({
       </form>
     );
   };
-  
 
 const PaumentDone = () => {
   const location = useLocation();
@@ -203,6 +220,7 @@ const PaumentDone = () => {
   const [error, setError] = useState(null);
   const [planDetails, setPlanDetails] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentData, setPaymentData] = useState(null);
   
   // Get parameters from URL
   const planId = new URLSearchParams(location.search).get('plan');
@@ -232,8 +250,13 @@ const PaumentDone = () => {
 
   const handlePaymentSuccess = (data) => {
     setPaymentSuccess(true);
+    setPaymentData(data);
     setShowModal(true);
     setLoading(false);
+    
+    // Optional: Clear any sensitive form data
+    // You can also consider redirecting to a success page
+    // navigate('/payment-completed', { state: { planDetails, paymentData: data } });
   };
 
   const handlePaymentError = (err) => {
@@ -246,13 +269,9 @@ const PaumentDone = () => {
     window.location.href = 'https://profinderrbiz.page.link/Mfmr'; 
   };
 
-  // Redirect immediately if payment was successful
-  useEffect(() => {
-    if (paymentSuccess) {
-      // You can either show the modal or redirect immediately
-      // window.location.href = 'https://profinderr.page.link/rWrk';
-    }
-  }, [paymentSuccess]);
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   if (!planId || !businessId) {
     return (
@@ -262,10 +281,20 @@ const PaumentDone = () => {
     );
   }
 
-  if (error) {
+  if (error && !paymentSuccess) {
     return (
       <div className="d-flex justify-content-center align-items-center bg-light" style={{ minHeight: "812px" }}>
-        <div className="alert alert-danger">{error}</div>
+        <div className="alert alert-danger text-center">
+          <h5>Payment Error</h5>
+          <p>{error}</p>
+          <p>This is may payment Faile. Please check your bank accunt <br /> or Go and check subcription on business app</p>
+          <button 
+            className="btn btn-primary mt-2"
+            onClick={()=>handleBackToApp()}
+          >
+          Business app
+          </button>
+        </div>
       </div>
     );
   }
@@ -306,36 +335,73 @@ const PaumentDone = () => {
               cursor: "pointer",
               border: "none",
             }}
+            disabled={loading}
           >
             <FaArrowLeft size={16} />
           </button>
-          <h5 className="mb-0 w-100 text-center fw-semibold">Subscribe to {planDetails.name}</h5>
+          <h5 className="mb-0 w-100 text-center fw-semibold">
+            {paymentSuccess ? 'Payment Successful' : `Subscribe to ${planDetails.name}`}
+          </h5>
         </div>
 
-        {/* Plan Details */}
-        <div className="mb-4 p-3 bg-light rounded-3">
-          <h6 className="fw-bold">{planDetails.name}</h6>
-          <p className="mb-1">Price: £{(planDetails.price).toFixed(2)}</p>
-          <p className="small text-muted">{planDetails.description}</p>
-        </div>
-        
-        {/* Payment Form */}
-        <Elements stripe={stripePromise}>
-          <PaymentForm 
-            planDetails={planDetails}
-            businessId={businessId}
-            onSuccess={handlePaymentSuccess}
-            onError={handlePaymentError}
-            loading={loading}
-            setLoading={setLoading}
-          />
-        </Elements>
+        {/* Show different content based on payment status */}
+        {paymentSuccess ? (
+          <div className="text-center p-3">
+            <div className="mb-3">
+              <FaCheckCircle size={64} color="#1EC26B" />
+            </div>
+            <h5 className="text-success fw-bold mb-3">Subscription Activated!</h5>
+            
+            <div className="bg-light p-3 rounded-3 mb-3">
+              <h6 className="fw-bold">{planDetails.name}</h6>
+              <p className="mb-1">Amount Paid: £{(planDetails.price).toFixed(2)}</p>
+              <p className="mb-1">Starting Date: {new Date().toLocaleDateString()}</p>
+              <p className="mb-0">
+                Next Renewal: {new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}
+              </p>
+            </div>
+            
+            <button
+              onClick={handleBackToApp}
+              className="btn text-white fw-semibold w-100 mt-3"
+              style={{
+                backgroundColor: "#FF6B00",
+                height: "50px",
+                borderRadius: "10px",
+              }}
+            >
+              Back To App
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* Plan Details */}
+            <div className="mb-4 p-3 bg-light rounded-3">
+              <h6 className="fw-bold">{planDetails.name}</h6>
+              <p className="mb-1">Price: £{(planDetails.price).toFixed(2)}</p>
+              <p className="small text-muted">{planDetails.description}</p>
+            </div>
+            
+            {/* Payment Form */}
+            <Elements stripe={stripePromise}>
+              <PaymentForm 
+                planDetails={planDetails}
+                businessId={businessId}
+                onSuccess={handlePaymentSuccess}
+                onError={handlePaymentError}
+                loading={loading}
+                setLoading={setLoading}
+                paymentCompleted={paymentSuccess}
+              />
+            </Elements>
+          </>
+        )}
       </div>
 
-      {/* Success Modal */}
+      {/* Success Modal - Optional, you can remove if using inline success message */}
       <Modal
         show={showModal}
-        onHide={() => setShowModal(false)}
+        onHide={handleCloseModal}
         centered
         contentClassName="border-0"
       >
